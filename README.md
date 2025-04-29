@@ -49,7 +49,7 @@ python todo_app.py
 4. Delete Task
 5. Exit
 Enter your choice (1-5): 1
-Enter the task: Complete the README.md
+Enter the task: Meeting time 11:00 PM
 ✅ Task added successfully!
 ![image alt](https://github.com/Aqeel-dev-ai/CLI_todo_app/blob/7718c5943a476ad3cf04d204f9b711ea6a6a85bd/todo_1.png)
 
