@@ -34,65 +34,79 @@ class TodoApp:
         if task:
             self.tasks.append(task)
             self.save_tasks()
-            print("✅ Task added successfully!")
+            print("Task added successfully!")
         else:
-            print("⚠️ Task cannot be empty!")
+            print("Task cannot be empty!")
 
     def view_tasks(self):
         if not self.tasks:
-            print("📭 No tasks found!")
-            ch = input("Do you want to add some task Y / N : ")
-            if ch == 'Y' or ch == 'y':
-                self.add_task()
-            if ch == 'N' or ch == 'n':
-                print("OK , Good Bye..")
+            print("No tasks found!")
+            while True:
+                ch = input("Do you want to add a task? (Y/N): ").strip().lower()
+                if ch == 'y':
+                    self.add_task()
+                    break
+                elif ch == 'n':
+                    print("OK, Goodbye!")
+                    break
+                else:
+                    print("Please enter Y or N.")
         else:
-            print("\n📋 Your Tasks:")
+            print("\nYour Tasks:")
             for i, task in enumerate(self.tasks, 1):
                 print(f"{i}. {task}")
 
     def update_task(self):
         if not self.tasks:
-            print("📭 No tasks to update!")
+            print("No tasks to update!")
             return
 
         self.view_tasks()
-        try:
-            task_no = int(input("Enter task number to update: "))
-            if 1 <= task_no <= len(self.tasks):
-                new_task = input("Enter new task: ").strip()
-                if new_task:
-                    self.tasks[task_no - 1] = new_task
-                    self.save_tasks()
-                    print("✅ Task updated successfully!")
+        while True:
+            task_no = input("Enter task number to update: ").strip()
+            if task_no.isdigit():
+                task_no = int(task_no)
+                if 1 <= task_no <= len(self.tasks):
+                    new_task = input("Enter new task: ").strip()
+                    if new_task:
+                        self.tasks[task_no - 1] = new_task
+                        self.save_tasks()
+                        print("Task updated successfully!")
+                        break
+                    else:
+                        print("Task cannot be empty!")
                 else:
-                    print("⚠️ Task cannot be empty!")
+                    print("Invalid task number!")
             else:
-                print("❌ Invalid task number!")
-        except ValueError:
-            print("⚠️ Please enter a valid number!")
+                print("Please enter a valid number!")
 
     def delete_task(self):
         if not self.tasks:
-            print("📭 No tasks to delete!")
+            print("No tasks to delete!")
             return
 
         self.view_tasks()
-        try:
-            task_no = int(input("Enter task number to delete: "))
-            if 1 <= task_no <= len(self.tasks):
-                deleted = self.tasks.pop(task_no - 1)
-                self.save_tasks()
-                print(f"🗑️ Task '{deleted}' deleted successfully!")
+        while True:
+            task_no = input("Enter task number to delete: ").strip()
+            if task_no.isdigit():
+                task_no = int(task_no)
+                if 1 <= task_no <= len(self.tasks):
+                    deleted = self.tasks.pop(task_no - 1)
+                    self.save_tasks()
+                    print(f"Task '{deleted}' deleted successfully!")
+                    break
+                else:
+                    print("Invalid task number!")
             else:
-                print("❌ Invalid task number!")
-        except ValueError:
-            print("⚠️ Please enter a valid number!")
+                print("Please enter a valid number!")
 
     def run(self):
         while True:
             self.show_menu()
             choice = input("Enter your choice (1-5): ").strip()
+            if choice not in {'1', '2', '3', '4', '5'}:
+                print("Invalid choice! Please enter a number between 1-5.")
+                continue
 
             match choice:
                 case '1': self.add_task()
@@ -100,10 +114,8 @@ class TodoApp:
                 case '3': self.update_task()
                 case '4': self.delete_task()
                 case '5':
-                    print("👋 Goodbye!")
+                    print("Goodbye!")
                     break
-                case _: print("❌ Invalid choice! Please enter a number between 1-5.")
-
 
 if __name__ == "__main__":
     app = TodoApp()
