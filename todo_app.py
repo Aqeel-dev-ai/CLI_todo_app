@@ -20,8 +20,8 @@ class TodoApp:
     def save_tasks(self):
         with open(self.filename, 'w') as file:
             json.dump(self.tasks, file, indent=4)
-
-    def show_menu(self):
+    @staticmethod
+    def show_menu():
         print("\n--- Todo App ---")
         print("1. Add Task")
         print("2. View Tasks")
